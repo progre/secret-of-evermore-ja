@@ -9,11 +9,13 @@ import {
   byRelocated,
   byToken,
   fromRawToken,
+  fromWaitToken,
   isRawToken,
   newline,
   readSequence,
   sequenceStart,
   toRawToken,
+  toWaitToken,
 } from "./control.ts";
 import type { TextCodec } from "@core";
 import { scan } from "./token.ts";
@@ -51,15 +53,26 @@ function encodeText(text: string, chars: CharCodec, value: ControlValue): Encode
       const bytes = chars.encodeChar(piece.value);
       if (bytes == null) missing.push(piece.value);
       else out.push(...bytes);
-    } else if (isRawToken(piece.body)) {
-      out.push(...fromRawToken(piece.body));
     } else {
-      const control = byToken.get(piece.body);
-      if (control == null) throw new Error("知らないトークン: " + piece.body);
-      out.push(control[value]);
+      out.push(...encodeToken(piece.body, value));
     }
   }
   return { bytes: Uint8Array.from(out), missing };
+}
+
+function encodeToken(body: string, value: ControlValue): number[] {
+  if (isRawToken(body)) {
+    return fromRawToken(body);
+  }
+  const wait = fromWaitToken(body);
+  if (wait != null) {
+    return wait;
+  }
+  const control = byToken.get(body);
+  if (control == null) {
+    throw new Error("知らないトークン: " + body);
+  }
+  return [control[value]];
 }
 
 /** 意味の分からないバイトは 16 進のトークンにする。表示文字の `{` は `{{` と書く */
@@ -75,7 +88,7 @@ function decodeText(bytes: Uint8Array, chars: CharCodec, value: ControlValue): s
     if (byte === sequenceStart) {
       const taken = readSequence(bytes, at);
       at += taken.length - 1;
-      out += "{" + toRawToken(taken) + "}";
+      out += "{" + (toWaitToken(taken) ?? toRawToken(taken)) + "}";
       continue;
     }
     const control = controls.get(byte);

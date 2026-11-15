@@ -1,6 +1,6 @@
 import { assertEquals } from "@std/assert";
 import type { Piece } from "@core";
-import { lineLimit, lineWidths, wideLines } from "./line-width.ts";
+import { lineLimit, lineWidths, wideLines } from "./line_width.ts";
 import type { WindowSite } from "./event/walk.ts";
 
 const widthOf = new Map([["あ", 10], ["1", 3]]);

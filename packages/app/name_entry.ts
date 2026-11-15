@@ -10,13 +10,4 @@ export async function buildNameTable(): Promise<void> {
 
   await Deno.writeFile(voicePath, tables.voiceTable);
   await Deno.writeFile(outPath, tables.table);
-  console.log(
-    tables.charCount + " 文字と操作キー " + tables.keyCount + " 個、計 " +
-      (tables.charCount + tables.keyCount) + " 升を " + outPath + " へ書き出した（" +
-      tables.table.length + " バイト）",
-  );
-  console.log(
-    "濁点の対応 " + tables.voicedRows + " 行を " + voicePath + " へ書き出した（" +
-      tables.voiceTable.length + " バイト）",
-  );
 }

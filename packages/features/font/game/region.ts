@@ -14,7 +14,7 @@ export function fontRegions(sizes: FontSizes): { name: string; size: number; at?
      */
     { name: "original_font", size: fontBlocksSize, at: 0x300000 },
     /**
-     * グリフ番号には `0x800` を上乗せして渡す（`packages/app/patch/base/wide-char.s`）。
+     * グリフ番号には `0x800` を上乗せして渡す（`packages/app/patch/base/wide_char.s`）。
      * 1 グリフ 32 バイト間隔なので上乗せぶんはちょうど 1 バンクにあたり、
      * グリフの位置が「原版フォントの次のバンクの先頭 + グリフ番号 * 32」で求まる。
      */

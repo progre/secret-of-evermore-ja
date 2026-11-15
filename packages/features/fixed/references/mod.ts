@@ -9,7 +9,7 @@
 
 import { endOfString, writeU16 } from "../bytes.ts";
 import { type Destination, placeStrings, type Untranslated } from "../place.ts";
-import { findOffsetOnly } from "./offset-only.ts";
+import { findOffsetOnly } from "./offset_only.ts";
 import { concatenated, direct, findPaired, findTable, type Reference } from "./paired.ts";
 
 export type InlineString = { base: number; offset: number; bytes: Uint8Array };

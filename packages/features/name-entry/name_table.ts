@@ -7,16 +7,15 @@
 import type { TextCodec } from "@core";
 
 /**
- * 並べる文字。濁点と半濁点は 1 つの升に置き、付いた字は並べない。
- * 付いた字を並べると 26 升増えて、升の数の上限を超えるためである。
+ * 並べる文字。1 行が画面の 1 行で、5 字ごとに隙間を空けて描く（`gap.s` の `name_step`）。
+ * 最後の行は、字の後ろに操作キーを並べて 15 升にする。
+ * 濁点と半濁点は 1 つの升に置き、付いた字は並べない。付いた字を並べると 26 升増えて、升目に入らない。
  */
 const rows = [
-  "アイウエオカキクケコ",
-  "サシスセソタチツテト",
-  "ナニヌネノハヒフヘホ",
-  "マミムメモヤユヨラリ",
-  "ルレロワヲンァィゥェ",
-  "ォッャュョー゛゜",
+  "アイウエオカキクケコサシスセソ",
+  "タチツテトナニヌネノハヒフヘホ",
+  "マミムメモヤユヨワンラリルレロ",
+  "ァィゥェォャュョッヲー゛゜",
 ];
 
 /**
@@ -56,24 +55,22 @@ const voiced = [
 ];
 
 /**
- * 画面の升の並び。`packages/app/patch/options/name-entry/grid.s` の列数（`cd:81b3`）と行数、
- * および初期カーソル（`cd:82cb`）と揃える。
+ * 画面の升の並び。次の値と揃える。
+ * - 列数: `packages/app/patch/options/name_entry/grid.s` の `cd:81b3`
+ * - 行数: パッチで変えていない升目の行数（4 行）
+ * - 初期カーソル: `cursor.s` の `cd:82cb`
+ *
  * 升が余ると、末尾を指す初期カーソルが決定のキーからずれる。
  */
 const columns = 15;
 const rowCount = 4;
 
-/**
- * 升の数の上限。
- * 折り返しは「現在位置 + 文字幅の半分」が枠幅を超えたら改行する作りで、
- * かなは英字の倍の幅があるため 1 行に入る数が減る。
- * そこへ升も増やすと行が枠の外へ伸びる。
- */
-const cellLimit = 72;
+/** 表の置き場の大きさ。直後に濁点の表を置く（`nameTableRegions`） */
+const tableBytesLimit = 0x100;
 
 /**
  * 拡張領域での置き場所。フックの手前の空きに置く。
- * `packages/app/patch/options/name-entry/grid.s` と `packages/app/patch/options/name-entry/input.s` は、どちらの表も番地に添字を足して引く。
+ * パッチ（`packages/app/patch/options/name_entry/` の `grid.s` と `input.s`）は、表の番地に添字を足して値を読む。
  */
 export function nameTableRegions(
   tableSize: number,
@@ -105,19 +102,22 @@ export function buildNameTables(japanese: TextCodec): NameTables {
   if (encoded.bytes.length !== chars.length * 2) {
     throw new Error("2 バイトで表せない字が混ざっている");
   }
-  if (columns * rowCount > cellLimit) {
-    throw new Error(
-      "枠が " + columns * rowCount + " 升あり、上限の " + cellLimit + " を超える",
-    );
+  if (rows.slice(0, -1).some((row) => Array.from(row).length !== columns)) {
+    throw new Error("最後の行より前の行は " + columns + " 字にする");
   }
   if (chars.length + actionKeys.length !== columns * rowCount) {
     throw new Error(
       "升が " + (chars.length + actionKeys.length) + " 個で、" + columns + " × " + rowCount +
-        " と合わない。packages/app/patch/options/name-entry/grid.s も直すこと",
+        " と合わない。packages/app/patch/options/name_entry/grid.s と cursor.s も直すこと",
     );
   }
 
   const table = new Uint8Array((chars.length + actionKeys.length + 1) * 2);
+  if (table.length > tableBytesLimit) {
+    throw new Error(
+      "表が " + table.length + " バイトあり、置き場の " + tableBytesLimit + " を超える",
+    );
+  }
   table.set(encoded.bytes, 0);
   actionKeys.forEach((key, index) => {
     table[(chars.length + index) * 2] = key;

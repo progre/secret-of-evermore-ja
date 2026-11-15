@@ -1,5 +1,5 @@
 import { assertEquals, assertThrows } from "@std/assert";
-import { parseScript } from "./script.ts";
+import { parseScript, parseTranslation } from "./script.ts";
 
 Deno.test("三重引用符の件は、直後の改行を除いて改行を本文に残す", () => {
   assertEquals(parseScript('0 = """\nふた\nつめ"""'), new Map([[0, "ふた\nつめ"]]));
@@ -11,4 +11,12 @@ Deno.test("制御コードの波括弧は表として読まれない", () => {
 
 Deno.test("文字列でない値は誤りとする", () => {
   assertThrows(() => parseScript("0 = 1"));
+  assertThrows(() => parseScript("0 = false"));
+});
+
+Deno.test("会話の訳文では、false を原文のまま変えない件として読む", () => {
+  assertEquals(
+    parseTranslation('0 = false\n1 = "あ"'),
+    new Map<number, string | false>([[0, false], [1, "あ"]]),
+  );
 });

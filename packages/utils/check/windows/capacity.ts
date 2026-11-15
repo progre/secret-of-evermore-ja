@@ -1,7 +1,7 @@
 /** 訳文の 1 ページの行数と 1 行の幅が、表示するウィンドウに収まるかを調べる */
 
 import type { Piece } from "@core";
-import { type WideLine, wideLines } from "./line-width.ts";
+import { lineLimits, type WideLine, wideLines } from "./line_width.ts";
 import { survey, type WindowSite } from "./event/walk.ts";
 
 /** 1 行目は Y = 4 に置かれ、行ごとに 12 進む。Y が `高さ * 8 - 12` を超えるとページを送る */
@@ -58,12 +58,31 @@ export function overflows(
   return Array.from(worst.values()).sort((a, b) => a.message - b.message);
 }
 
+/** 文を表示するウィンドウの行数。複数あれば最も少ないもの。知らせ（`queued`）は 1 行のウィンドウに出る */
+export function windowLines(sites: WindowSite[], queued: Set<number>): Map<number, number> {
+  const lines = new Map<number, number>();
+  const record = (message: number, capacity: number) => {
+    lines.set(message, Math.min(lines.get(message) ?? capacity, capacity));
+  };
+  sites.forEach((site) => {
+    site.messages.forEach((message) => record(message, linesFor(site.window.height)));
+  });
+  queued.forEach((message) => record(message, 1));
+  return lines;
+}
+
 interface WindowCheck {
   overflows: Overflow[];
   unknownInstructions: number;
   /** 1 行のウィンドウに表示する知らせのうち、2 行以上あるもの */
   tallNotices: number[];
   wideLines: WideLine[];
+  /** 文ごとの 1 行の幅の上限 */
+  lineLimits: Map<number, number>;
+  /** 文ごとのウィンドウの行数 */
+  windowLines: Map<number, number>;
+  /** 文ごとの、同じウィンドウで直前に出しうる文 */
+  previous: Map<number, Set<number>>;
 }
 
 /** ROM は書き替えない。ウィンドウの高さは原版のまま使う。`widthOf` は字の幅 */
@@ -84,5 +103,8 @@ export function checkWindows(
       .filter((message) => (linesOf(message) ?? 0) > 1)
       .sort((a, b) => a - b),
     wideLines: wideLines(scripts, dialog, widthOf),
+    lineLimits: lineLimits(scripts),
+    windowLines: windowLines(scripts.sites, scripts.queued),
+    previous: scripts.previous,
   };
 }

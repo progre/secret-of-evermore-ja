@@ -15,8 +15,13 @@ Deno.test("用途の分からないコードは 16 進で書く", () => {
   assertEquals(decode(Uint8Array.of(0xa5)), "{A5}");
 });
 
-Deno.test("可変長シーケンスは終端まで 1 つのトークンにする", () => {
-  assertEquals(decode(Uint8Array.of(0x80, 0x3d, 0x80, 0x41)), "{80 3D 80}A");
+Deno.test("3 バイトの可変長シーケンスは待ちのトークンにし、3 バイト目を上位の桁とする", () => {
+  assertEquals(decode(Uint8Array.of(0x80, 0x3d, 0x80, 0x41)), "{wait 61}A");
+  assertEquals(decode(Uint8Array.of(0x80, 0x69, 0x81)), "{wait 361}");
+});
+
+Deno.test("終端に達しない可変長シーケンスは 16 進で書く", () => {
+  assertEquals(decode(Uint8Array.of(0x41, 0x80, 0x3d, 0x41)), "A{80 3D 41}");
 });
 
 Deno.test("表示文字の波括弧は重ねて書く", () => {
@@ -24,7 +29,7 @@ Deno.test("表示文字の波括弧は重ねて書く", () => {
 });
 
 Deno.test("読み取りと書き戻しが往復する", () => {
-  const bytes = Uint8Array.of(0x41, 0x7b, 0x0a, 0x86, 0x5f, 0x80, 0x3d, 0x80, 0xa5, 0x8b);
+  const bytes = Uint8Array.of(0x41, 0x7b, 0x0a, 0x86, 0x5f, 0x80, 0x69, 0x81, 0xa5, 0x8b);
   assertEquals(encode(decode(bytes)).bytes, bytes);
 });
 

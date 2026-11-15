@@ -14,4 +14,4 @@ export {
   todoMarker,
 } from "./review/translation.ts";
 export { unmarkedSpeakers } from "./review/speaker.ts";
-export { parseScript } from "./script.ts";
+export { parseScript, parseTranslation, translatedTexts } from "./script.ts";

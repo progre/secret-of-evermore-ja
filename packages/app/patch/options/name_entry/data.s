@@ -1,4 +1,4 @@
-// 名前入力で選べる文字の表（packages/features/name-entry/name-table.ts が作る）
+// 名前入力で選べる文字の表（packages/features/name-entry/name_table.ts が作る）
 org {name_table}
 incbin "build/name-table.bin"
 

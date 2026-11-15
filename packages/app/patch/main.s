@@ -21,6 +21,8 @@ define wide_flag	$0b40
 // 表からは 16bit で読むため、Shift-JIS の第 1 バイトが下位に来る
 define mark_voiced	$4a81
 define mark_half	$4b81
+// 名前入力の升目で、5 字ごとに空ける隙間のドット数
+define name_gap		$0007
 
 // フック本体は {hooks} の 4KB に、ファイルごと 256 バイトずつ置く。
 // 各ファイルは本体の直後の warnpc で、自分の区画を超えていないことを確かめる。
@@ -32,24 +34,24 @@ define hook_name_grid	{hooks}+$400
 define hook_name_input	{hooks}+$500
 define hook_notice	{hooks}+$600
 define hook_shadow	{hooks}+$700
-define hook_alchemy	{hooks}+$800
+define hook_name_gap	{hooks}+$800
 define hook_narrow	{hooks}+$900
 
 // 取り込むファイルのパスは、この位置からではなく
 // xkas を起動したディレクトリーからの相対で解決される。
 // ラベルと define は全ファイルで 1 つの名前空間を共有する。
-incsrc packages/app/patch/base/dialog-pointer.s
-incsrc packages/app/patch/base/control-code.s
-incsrc packages/app/patch/base/wide-char.s
+incsrc packages/app/patch/base/dialog_pointer.s
+incsrc packages/app/patch/base/control_code.s
+incsrc packages/app/patch/base/wide_char.s
 incsrc packages/app/patch/base/glyph.s
-incsrc packages/app/patch/base/fixed-redirect.s
+incsrc packages/app/patch/base/fixed_redirect.s
 incsrc packages/app/patch/base/data.s
-incsrc packages/app/patch/options/notice-tail.s
+incsrc packages/app/patch/options/notice_tail.s
 incsrc packages/app/patch/options/shadow.s
-incsrc packages/app/patch/options/narrow-offset.s
-incsrc packages/app/patch/options/save-slot.s
-incsrc packages/app/patch/options/alchemy-width.s
-incsrc packages/app/patch/options/dog-name.s
-incsrc packages/app/patch/options/name-entry/grid.s
-incsrc packages/app/patch/options/name-entry/input.s
-incsrc packages/app/patch/options/name-entry/data.s
+incsrc packages/app/patch/options/narrow_offset.s
+incsrc packages/app/patch/options/screen_layout.s
+incsrc packages/app/patch/options/name_entry/grid.s
+incsrc packages/app/patch/options/name_entry/gap.s
+incsrc packages/app/patch/options/name_entry/cursor.s
+incsrc packages/app/patch/options/name_entry/input.s
+incsrc packages/app/patch/options/name_entry/data.s

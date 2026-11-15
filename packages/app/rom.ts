@@ -34,19 +34,14 @@ export async function buildRom(basePath: string): Promise<void> {
     regionOf(layout, "fixed_text"),
     regionOf(layout, "fixed_redirect"),
   );
-  console.log(
-    "固定テキスト " + installed.count + " 本、" + installed.used + " / " + installed.capacity +
-      " バイトをバンク " + installed.bank.toString(16) + " へ移した" +
-      "（バンクを積む直値 " + installed.retargeted + " 箇所を向け直した）",
-  );
   for (const [index, chars] of installed.missing) {
-    console.log("第 " + index + " 件に収録外の文字: " + chars.join(""));
+    console.warn("Unsupported characters in fixed text #" + index + ": " + chars.join(""));
   }
 
   writeChecksum(rom);
   await Deno.writeFile(outPath, rom);
 
-  console.log("ROM を書き出した: " + outPath + "（" + rom.length + " バイト）");
+  console.log("Wrote " + outPath);
 }
 
 /** Linux 向けにビルドした xkas があれば使い、無ければ Windows 版の exe を使う */

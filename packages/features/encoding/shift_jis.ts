@@ -3,17 +3,19 @@
  * 制御コードの値と第 1 バイトの範囲は重ならないため、境界は先頭バイトだけで決まる。
  * 表示文字と Shift-JIS の対応は `encoding-japanese` に任せる。
  *
- * 英数字と空白とハイフンは、原版フォントの 1 バイトで書く。原版の英字と見た目をそろえるため。
- * ほかの半角の記号は収録しない。訳文に混ざっていれば、収録外の文字として報告される。
+ * ASCII の表示文字（`0x20`-`0x7E`）は、そのバイトのまま 1 バイトで書き、原版フォントで描く。
  */
 
 import Encoding from "encoding-japanese";
 import type { TextCodec } from "@core";
 import { type CharCodec, textCodec } from "./codec.ts";
 
-const singleByte = /^[ 0-9A-Za-z-]$/;
+/** 制御コード（`0x00`-`0x1F`）と 2 バイト文字の第 1 バイトは、どちらもこの範囲に含まれない */
+function isAscii(code: number): boolean {
+  return code >= 0x20 && code <= 0x7e;
+}
 
-/** 描画ルーチンが 2 バイト文字の第 1 バイトとして読む範囲（`packages/app/patch/base/control-code.s`） */
+/** 描画ルーチンが 2 バイト文字の第 1 バイトとして読む範囲（`packages/app/patch/base/control_code.s`） */
 function isLead(byte: number): boolean {
   return (byte >= 0x81 && byte <= 0x9f) || (byte >= 0xe0 && byte <= 0xef);
 }
@@ -34,12 +36,13 @@ function decodeWide(lead: number, trail: number): string | null {
 
 const chars: CharCodec = {
   encodeChar(char) {
-    return singleByte.test(char) ? [char.charCodeAt(0)] : encodeWide(char);
+    return char.length === 1 && isAscii(char.charCodeAt(0))
+      ? [char.charCodeAt(0)]
+      : encodeWide(char);
   },
   decodeChar(bytes, at) {
-    const single = String.fromCharCode(bytes[at]);
-    if (singleByte.test(single)) {
-      return { char: single, length: 1 };
+    if (isAscii(bytes[at])) {
+      return { char: String.fromCharCode(bytes[at]), length: 1 };
     }
     if (!isLead(bytes[at]) || at + 1 >= bytes.length) {
       return null;

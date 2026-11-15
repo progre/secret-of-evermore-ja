@@ -1,3 +1,4 @@
+import { spaceWidth } from "@features/font";
 import { checkWindows } from "./capacity.ts";
 import { readScriptPieces } from "../shared/script.ts";
 import { readWidths } from "../shared/width.ts";
@@ -6,12 +7,35 @@ import { readWidths } from "../shared/width.ts";
  * 会話がウィンドウの行数と幅に収まるかを調べる。
  * 会話ごとのウィンドウは、原版の ROM のスクリプトを解析して調べる。
  * パッチはウィンドウのスクリプトを書き換えないため、組み立てた ROM と結果は変わらない。
+ * 文ごとの 1 行の幅の上限、ウィンドウの行数、同じウィンドウで直前に出しうる文は、
+ * ビューアーが表示を再現するために書き出す。
  */
 export async function reviewWindows(basePath: string): Promise<void> {
   const dialogPath = "data/dialog-ja.toml";
+  const limitsPath = "build/line-limits.json";
+  const windowLinesPath = "build/window-lines.json";
+  const previousPath = "build/window-previous.json";
 
   const rom = await Deno.readFile(basePath);
-  const result = checkWindows(rom, await readScriptPieces(dialogPath), await readWidths(rom));
+  // 会話のウィンドウでは、スペースはフォントの幅ではなくウィンドウの送り幅で進む
+  const widthOf = (await readWidths(rom)).set(" ", spaceWidth);
+  const result = checkWindows(rom, await readScriptPieces(dialogPath), widthOf);
+  await Deno.writeTextFile(limitsPath, JSON.stringify(Object.fromEntries(result.lineLimits)));
+  await Deno.writeTextFile(
+    windowLinesPath,
+    JSON.stringify(Object.fromEntries(result.windowLines)),
+  );
+  await Deno.writeTextFile(
+    previousPath,
+    JSON.stringify(
+      Object.fromEntries(
+        Array.from(
+          result.previous,
+          ([message, before]) => [message, Array.from(before).sort((a, b) => a - b)],
+        ),
+      ),
+    ),
+  );
 
   console.log(
     "ウィンドウに収まらない文 " + result.overflows.length + " 件" +

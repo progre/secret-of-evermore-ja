@@ -4,6 +4,7 @@
  */
 
 import { parseBdf } from "../bdf.ts";
+import type { Font } from "../glyph.ts";
 import { type Built, cellHeight, encodeFont, type Placement } from "./format.ts";
 import {
   buildLayout,
@@ -20,6 +21,13 @@ interface GameFont {
   placements: Placement[];
   built: Built;
   leadTable: Uint8Array;
+}
+
+/** BDF の全グリフをゲームでの描画位置に調整し、文字をキーとする表で返す */
+export function gameGlyphs(bdf: string): Font {
+  const glyphs = parseBdf(bdf, cellHeight);
+  const chars = Array.from(glyphs.keys(), (code) => [String.fromCodePoint(code), 0] as const);
+  return fusionFont(glyphs, new Map(chars));
 }
 
 /**

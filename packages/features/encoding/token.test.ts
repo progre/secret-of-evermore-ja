@@ -33,7 +33,7 @@ Deno.test("話者の印だけを取り除き、ほかのトークンと重ねた
 
 Deno.test("トークンを表示上の役割で見分ける", () => {
   assertEquals(
-    readPieces("{page}{hero}{code96}{80 3D 80}"),
+    readPieces("{page}{hero}{code96}{wait 61}"),
     Array.of(
       { kind: "pageBreak" },
       { kind: "embed" },

@@ -38,7 +38,7 @@ export const fixedTextRegion = { name: "fixed_text", size: originalRange.start, 
 
 /**
  * 原版のオフセットのまま移設先のバンクを読む参照を、表示ルーチンが新しい位置へ読み替える表
- * （`packages/app/patch/base/fixed-redirect.s`）。移設先のバンクの外に置く。
+ * （`packages/app/patch/base/fixed_redirect.s`）。移設先のバンクの外に置く。
  * バンクを積み直さずにオフセットだけ替えて読む参照が `$781E` 以降を指すため、
  * 移設先のバンクの空きは 0 のまま残し、空の文字列として読ませる。
  */
@@ -48,7 +48,7 @@ export const fixedRedirectRegion = {
 };
 
 /**
- * 数の後ろに後半をつなぐ知らせの件（`packages/app/patch/options/notice-tail.s`）。
+ * 数の後ろに後半をつなぐ知らせの件（`packages/app/patch/options/notice_tail.s`）。
  * パッチは最初の終端の次を後半として読むため、訳文に終端 `{00}` が要る。
  * 無いと、次の文字列を後半としてつないでしまう。
  */

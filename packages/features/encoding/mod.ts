@@ -5,5 +5,5 @@
  */
 
 export { originalCodec, relocatedOriginalCodec } from "./original.ts";
-export { shiftJisCodec, shiftJisTable } from "./shift-jis.ts";
-export { readPieces, stripSpeakers } from "./token.ts";
+export { shiftJisCodec, shiftJisTable } from "./shift_jis.ts";
+export { readPieces, scan, stripSpeakers } from "./token.ts";

@@ -1,6 +1,6 @@
 import { assertEquals } from "@std/assert";
 import type { Piece } from "@core";
-import { linesFor, maxPageLines, overflows } from "./capacity.ts";
+import { linesFor, maxPageLines, overflows, windowLines } from "./capacity.ts";
 import type { WindowSite } from "./event/walk.ts";
 
 function site(patchAt: number, height: number, messages: number[]): WindowSite {
@@ -38,4 +38,9 @@ Deno.test("入る行数を超える文だけを挙げ、訳文の無い文は挙
 Deno.test("複数の箇所に出る文は、入る行数が最も少ないウィンドウで挙げる", () => {
   const result = overflows([site(0x100, 6, [1]), site(0x200, 4, [1])], () => 4);
   assertEquals(result.map((o) => [o.message, o.site.patchAt]), [[1, 0x200]]);
+});
+
+Deno.test("文を表示するウィンドウが複数あれば最も少ない行数を返し、知らせは 1 行とする", () => {
+  const lines = windowLines([site(0x100, 6, [1, 2]), site(0x200, 4, [1])], new Set([3]));
+  assertEquals(lines, new Map([[1, 2], [2, 3], [3, 1]]));
 });

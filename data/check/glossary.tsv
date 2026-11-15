@@ -73,7 +73,7 @@
 地名	Omnitopia	オムニトピア	未来の宇宙基地
 地名	Podunk	ポダンク	現実世界の町
 地名	Prehistoria	プレヒストリア	原始時代の地方
-地名	Quicksand Field	流砂の原
+地名	Quicksand Field	流砂地帯
 地名	Volcano	火山
 材料	Acorn	どんぐり	団栗は熟字訓で読みにくい
 材料	Ash	灰
@@ -104,7 +104,7 @@
 材料	Wings	翼	ゲーム内の絵で確認済み
 道具	Amulet of Annihilation	破壊のアミュレット	メニューでの名前は Annihilation Amulet
 道具	Annihilation Amulet	破壊のアミュレット
-道具	Armor Polish	よろいみがき
+道具	Armor Polish	鎧磨き
 道具	Atlas Medallion	アトラスの護符	メニューの名前は Atlas Amulet。表示を揃える
 道具	Biscuit	ビスケット	犬のおやつ
 道具	Call Bead	呼び玉	投げると仲間を呼べる
@@ -119,13 +119,13 @@
 道具	Gold Coins	ゴールド	通貨の単位
 道具	Golden Jackal Statuette	金のジャッカル	メニューでの名前は Golden Jackal
 道具	Insect Incense	虫よけの香
-道具	Jade Disk	ひすいの円盤
+道具	Jade Disk	翡翠の円盤
 道具	Jaguar Ring	ジャガーの指輪
 道具	Jaguar Tooth Ring	ジャガーの指輪	ダイアログでの長い呼び方。メニューに合わせる
 道具	Jeweled Scarab	宝石のスカラベ
 道具	Jewels	ジュエル	通貨の単位。data/fixed-ja.toml の第 1 件
 道具	Magic Gourd	魔法のひょうたん
-道具	Moxa Stick	もぐさの棒
+道具	Moxa Stick	棒もぐさ
 道具	Oracle Bone	うらないの骨
 道具	Particle Bomb	粒子爆弾	バズーカの弾
 道具	Pressure Gauge	圧力計
@@ -141,7 +141,7 @@
 道具	Windwalker	ウィンドウォーカー	ティンカーの飛行機械
 道具	Wizard's Coin	魔術師の硬貨
 交易品	bead	ビーズ
-交易品	ceramic pot	陶器のつぼ
+交易品	ceramic pot	陶器の壺
 交易品	chicken	にわとり
 交易品	golden jackal	金のジャッカル
 交易品	jeweled scarab	宝石のスカラベ
@@ -151,39 +151,39 @@
 交易品	souvenir spoon	スーベニアスプーン
 交易品	spice	香辛料
 交易品	tapestry	タペストリー
-武器	Atom Smasher	原子くだき
+武器	Atom Smasher	アトムスマッシャー
 武器	Bazooka	バズーカ
-武器	Bronze Axe	青銅の斧
-武器	Bronze Spear	青銅の槍
+武器	Bronze Axe	ブロンズアックス
+武器	Bronze Spear	ブロンズスピア
 武器	Crusader Sword	十字軍の剣
 武器	Gladiator Sword	剣闘士の剣
 武器	Horn Spear	角の槍
-武器	Knight Basher	騎士つぶし
+武器	Knight Basher	ナイトバッシャー
 武器	Laser Lance	レーザーランス
-武器	Neutron Blade	中性子の刃
+武器	Neutron Blade	ニュートロンエッジ
 武器	Spider's Claw	クモの爪
-防具	Bronze Armor	青銅のよろい	メニューでの名前。ダイアログでは Bronze Chestplate
-防具	Bronze Chestplate	青銅のよろい	メニューでの名前は Bronze Armor。表示を揃える
-防具	Bronze Gauntlet	青銅の小手
-防具	Bronze Helmet	青銅のかぶと
-防具	Centurian Cape	百人長のマント	メニューでの名前は Centurion Cape
-防具	Centurian Helmet	百人長のかぶと	メニューでの名前は Centurion Helm
+防具	Bronze Armor	ブロンズアーマー	メニューでの名前。ダイアログでは Bronze Chestplate
+防具	Bronze Chestplate	ブロンズアーマー	メニューでの名前は Bronze Armor。表示を揃える
+防具	Bronze Gauntlet	ブロンズガントレット
+防具	Bronze Helmet	ブロンズヘルム
+防具	Centurian Cape	百人隊長のマント	メニューでの名前は Centurion Cape
+防具	Centurian Helmet	百人隊長の兜	メニューでの名前は Centurion Helm
 防具	Crusader Collar	十字軍の首輪	第 2019 件では Defender Collar。同じ装備なので表示を揃える
 防具	Defender Collar	十字軍の首輪	メニューでの名前。第 107 件と第 181 件では Crusader Collar
 防具	Dino Skin	恐竜の皮
-防具	Dragon Helm	竜のかぶと	メニューでの名前。ダイアログでは Dragon Helmet
-防具	Dragon Helmet	竜のかぶと	メニューでの名前は Dragon Helm
-防具	Gloves of Ra	ラーの手袋
-防具	Gold Plated Vest	金めっきのベスト	メニューでの名前は Gold-Plated Vest
+防具	Dragon Helm	ドラゴンヘルム	メニューでの名前。ダイアログでは Dragon Helmet
+防具	Dragon Helmet	ドラゴンヘルム	メニューでの名前は Dragon Helm
+防具	Gloves of Ra	ラーのグローブ
+防具	Gold Plated Vest	金メッキのベスト	メニューでの名前は Gold-Plated Vest
 防具	Grass Vest	草のベスト
-防具	Iron Bracer	鉄の腕当て
+防具	Iron Bracer	鉄の小手
 防具	Leather Collar	革の首輪
 防具	Magician's Ring	魔術師の指輪
-防具	Obsidian Helmet	黒曜石のかぶと	メニューでの名前は Obsidian Helm
-防具	Serpent Bracelet	蛇の腕当て	メニューでの名前は Serpent Bracer
-防具	Shining Armor	輝くよろい
-防具	Silver Mail	銀の鎖かたびら
-防具	Spiky Collar	とげの首輪
+防具	Obsidian Helmet	黒曜石の兜	メニューでの名前は Obsidian Helm
+防具	Serpent Bracelet	蛇の小手	メニューでの名前は Serpent Bracer
+防具	Shining Armor	輝きの鎧
+防具	Silver Mail	シルバーメイル
+防具	Spiky Collar	トゲ付き首輪
 防具	Spot's Collar	スポットの首輪
 防具	Stone Vest	石のベスト
 防具	Thug's Cloak	ならず者のマント
@@ -223,14 +223,14 @@
 集団	Vipers	バイパー	火山のトカゲ人間
 用語	Alchemist	錬金術師
 用語	Alchemy	錬金術
-用語	bio	バイオ	ロボットが人間を呼ぶ語
-用語	bio-creature	バイオ生物	ロボットが人間を呼ぶ語
+用語	bio	生命体	ロボットが人間を呼ぶ語
+用語	bio-creature	生命体	ロボットが人間を呼ぶ語
 用語	chessboard	チェス盤	2 つの城の間の高原にある
 用語	Exhibition of Cultural Oddities	珍品博覧会	ダイアログでの長い呼び方
 用語	Exhibition of Oddities	珍品博覧会	パーシバル・プランクの見世物
-用語	Formula	術	一度覚えると消えない。使うたびに材料が減る
+用語	Formula	調合法	一度覚えると消えない。使うたびに材料が減る
 用語	Hit Points	体力
 用語	pig race	豚レース
-用語	ticket	切符	見世物の入場券
+用語	ticket	チケット	見世物の入場券
 用語	Wax off	ワックスとる	掃除ロボットの台詞。映画『ベスト・キッド』のもじり
 用語	Wax on	ワックスかける	掃除ロボットの台詞。映画『ベスト・キッド』のもじり

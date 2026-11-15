@@ -5,22 +5,16 @@
 
 import { insertDialog } from "./dialog.ts";
 import { buildFont } from "./font.ts";
-import { buildNameTable } from "./name-entry.ts";
+import { buildNameTable } from "./name_entry.ts";
 import { buildRom } from "./rom.ts";
 
 async function main(): Promise<void> {
   const basePath = "Secret of Evermore (USA).sfc";
   await Deno.mkdir("build", { recursive: true });
-  const steps: [string, () => Promise<void>][] = [
-    ["フォント", buildFont],
-    ["名前入力の表", buildNameTable],
-    ["会話", insertDialog],
-    ["ROM", () => buildRom(basePath)],
-  ];
-  for (const [name, step] of steps) {
-    console.log("## " + name);
-    await step();
-  }
+  await buildFont();
+  await buildNameTable();
+  await insertDialog(basePath);
+  await buildRom(basePath);
 }
 
 if (import.meta.main) {

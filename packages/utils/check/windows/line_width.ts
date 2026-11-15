@@ -37,7 +37,7 @@ export function lineWidths(pieces: Piece[], widthOf: Map<string, number>): numbe
 export type WideLine = { message: number; line: number; width: number; limit: number };
 
 /** 文ごとの 1 行の幅の上限。複数のウィンドウに出る文は最も狭いもので比べる */
-function limits(survey: Pick<Survey, "sites" | "queued">): Map<number, number> {
+export function lineLimits(survey: Pick<Survey, "sites" | "queued">): Map<number, number> {
   const limitOf = new Map<number, number>();
   const narrow = (message: number, limit: number) => {
     limitOf.set(message, Math.min(limitOf.get(message) ?? limit, limit));
@@ -55,7 +55,7 @@ export function wideLines(
   dialog: Map<number, Piece[]>,
   widthOf: Map<string, number>,
 ): WideLine[] {
-  return Array.from(limits(survey))
+  return Array.from(lineLimits(survey))
     .sort(([a], [b]) => a - b)
     .flatMap(([message, limit]) =>
       lineWidths(dialog.get(message) ?? [], widthOf).flatMap((width, line) =>

@@ -696,6 +696,16 @@
         "dependencies": [
           "jsr:@std/assert@1"
         ]
+      },
+      "packages/utils/release": {
+        "dependencies": [
+          "jsr:@std/assert@1"
+        ]
+      },
+      "packages/utils/viewer": {
+        "dependencies": [
+          "jsr:@std/assert@1"
+        ]
       }
     }
   }
