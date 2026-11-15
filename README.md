@@ -53,3 +53,10 @@ deno task viewer
 - 「会話」と「固定テキスト」のタブで、表示する訳文を切り替えられます。
 - 「▲」「▼」か `p`、`n` のキーで、前後の警告へ移れます。
   - 警告には、ウィンドウからのはみ出し、名前の途中の改行、行頭の句読点などがあります。
+
+## Credits
+
+The dialog pointer patch is adapted from
+[SecretOfEverhack](https://github.com/Gemini-Loboto3/SecretOfEverhack)
+by Gemini-Loboto3, an Italian translation of Secret of Evermore,
+which also served as a starting point for this project's research.
