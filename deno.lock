@@ -16,6 +16,7 @@
     "jsr:@std/toml@^1.0.11": "1.0.11",
     "npm:@iarna/toml@^2.2.5": "2.2.5",
     "npm:encoding-japanese@^2.4.0": "2.4.0",
+    "npm:fflate@0.8": "0.8.3",
     "npm:markdownlint-cli2@*": "0.23.3",
     "npm:rom-patcher@3.1.0-b": "3.1.0-b"
   },
@@ -206,6 +207,9 @@
       "dependencies": [
         "reusify"
       ]
+    },
+    "fflate@0.8.3": {
+      "integrity": "sha512-tbZNuJrLwGUp3zshBtdy4W+ORxZuIh8a5ilyIEQDC5rY1f3U20JMry0Ll3WBzU58EZKsEuJFXhb5gwv8CsPvgA=="
     },
     "fill-range@7.1.1": {
       "integrity": "sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==",
@@ -699,7 +703,10 @@
       },
       "packages/utils/release": {
         "dependencies": [
-          "jsr:@std/assert@1"
+          "jsr:@std/assert@1",
+          "jsr:@std/fs@1",
+          "jsr:@std/path@1",
+          "npm:fflate@0.8"
         ]
       },
       "packages/utils/viewer": {

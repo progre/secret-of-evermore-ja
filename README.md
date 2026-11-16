@@ -4,7 +4,7 @@ SNES「Secret of Evermore」(北米版) の非公式日本語化パッチです�
 
 ## 使い方
 
-1. [Releases] から `soe-ja.bps` を入手します。
+1. [Releases] から zip を入手して展開します。
 2. ROM の SHA-256 が次の値と同じことを確かめます。
 
    ```text
